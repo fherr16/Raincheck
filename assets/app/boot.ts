@@ -6,8 +6,7 @@ import { provide } from "@angular/core";
 import { HTTP_PROVIDERS } from "@angular/http";
 
 import { AppComponent } from "./app.component";
-import { MessageService } from "./messages/message.service";
 import { AuthService } from "./auth/auth.service";
 import { ErrorService } from "./errors/error.service";
 
-bootstrap(AppComponent, [MessageService, AuthService, ErrorService, ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy}), HTTP_PROVIDERS]);
+bootstrap(AppComponent, [AuthService, ErrorService, ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy}), HTTP_PROVIDERS]);
