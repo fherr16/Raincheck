@@ -5,6 +5,7 @@ import { SignupComponent } from "./signup.component";
 import { SigninComponent } from "./signin.component";
 import { LogoutComponent } from "./logout.component";
 import { AuthService } from "./auth.service";
+
 @Component({
     selector: 'my-auth',
     template: `
