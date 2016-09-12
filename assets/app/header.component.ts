@@ -7,6 +7,7 @@ import { ROUTER_DIRECTIVES } from "@angular/router";
             <nav class="col-md-8 col-md-offset-2">
                 <ul class="nav nav-pills">
                     <li><a [routerLink]="['']">Messages</a></li>
+                    <li><a [routerLink]="['/friendlist']">Friend List</a></li>
                     <li><a [routerLink]="['/auth']">Authentication</a></li>
                 </ul>
             </nav>

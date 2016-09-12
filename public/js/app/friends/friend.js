@@ -1,0 +1,12 @@
+"use strict";
+var Friend = (function () {
+    function Friend(firstName, userId, friendId) {
+        this.firstName = firstName;
+        this.userId = userId;
+        this.friendId = friendId;
+    }
+    return Friend;
+}());
+exports.Friend = Friend;
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZyaWVuZHMvZnJpZW5kLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQTtJQUtJLGdCQUFhLFNBQWlCLEVBQUUsTUFBZSxFQUFFLFFBQWlCO1FBQzlELElBQUksQ0FBQyxTQUFTLEdBQUcsU0FBUyxDQUFDO1FBQzNCLElBQUksQ0FBQyxNQUFNLEdBQUcsTUFBTSxDQUFDO1FBQ3JCLElBQUksQ0FBQyxRQUFRLEdBQUcsUUFBUSxDQUFDO0lBQzdCLENBQUM7SUFDTCxhQUFDO0FBQUQsQ0FWQSxBQVVDLElBQUE7QUFWWSxjQUFNLFNBVWxCLENBQUEiLCJmaWxlIjoiZnJpZW5kcy9mcmllbmQuanMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgY2xhc3MgRnJpZW5kIHtcbiAgICBmaXJzdE5hbWU6IHN0cmluZztcbiAgICB1c2VySWQ6IHN0cmluZztcbiAgICBmcmllbmRJZDogc3RyaW5nO1xuICAgIFxuICAgIGNvbnN0cnVjdG9yIChmaXJzdE5hbWU6IHN0cmluZywgdXNlcklkPzogc3RyaW5nLCBmcmllbmRJZD86IHN0cmluZykge1xuICAgICAgICB0aGlzLmZpcnN0TmFtZSA9IGZpcnN0TmFtZTtcbiAgICAgICAgdGhpcy51c2VySWQgPSB1c2VySWQ7XG4gICAgICAgIHRoaXMuZnJpZW5kSWQgPSBmcmllbmRJZDtcbiAgICB9XG59Il0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
