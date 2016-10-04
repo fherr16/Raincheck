@@ -30,7 +30,7 @@ export class FriendService {
                 const data = response.json().obj;
                 let objs: any[] = [];
                 for (let i = 0; i < data.length; i++) {
-                    let friend = new Friend(data[i].user.firstName, data[i].user._id, data[i]._id);
+                    let friend = new Friend(data[i].firstName, data[i].userId, data[i]._id);
                     objs.push(friend);
                 };
                 return objs;
@@ -54,8 +54,7 @@ export class FriendService {
 
     deleteFriend(friend: Friend) {
         this.friends.splice(this.friends.indexOf(friend), 1);
-        const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
-        return this._http.delete('http://localhost:3000/friendlist/' + friend.friendId + token)
+        return this._http.delete('http://localhost:3000/friendlist/' + friend.friendId)
             .map(response => response.json())
             .catch(error => Observable.throw(error.json()));
     }

@@ -3,9 +3,9 @@ export class Friend {
     userId: string;
     friendId: string;
     
-    constructor (firstName: string, userId?: string, friendId?: string) {
+    constructor (firstName: string, userId: string, friendId?: string) {
         this.firstName = firstName;
-        this.userId = userId;
+     	this.userId = userId;
         this.friendId = friendId;
     }
 }

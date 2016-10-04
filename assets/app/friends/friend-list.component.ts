@@ -11,7 +11,7 @@ import { ErrorService } from "../errors/error.service";
         <section class="col-md-8 col-md-offset-2">
             <my-friend *ngFor="let friend of friends" [friend]="friend"></my-friend>
 
-            <my-user-list></my-user-list>
+            <my-user-list [friends]="friends"></my-user-list>
 
         </section>
     `,
@@ -22,7 +22,6 @@ export class FriendListComponent implements OnInit {
     constructor(private _friendService: FriendService, private _errorService: ErrorService) {}
 
     friends: Friend[];
-    users: Friend[];
 
     ngOnInit() {
         this._friendService.getFriends()

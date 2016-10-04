@@ -58,8 +58,7 @@ router.post('/', function(req, res, next) {
 
 
 router.delete('/:id', function(req, res, next) {
-    var decoded = jwt.decode(req.query.token);
-    FriendList.findById(req.params.id, function(err, doc) {
+    Friend.findById(req.params.id, function(err, doc) {
         if (err) {
             return res.status(404).json({
                 title: 'An error occurred',
@@ -70,12 +69,6 @@ router.delete('/:id', function(req, res, next) {
             return res.status(404).json({
                 title: 'No message found',
                 error: {message: 'Message could not be found'}
-            });
-        }
-        if (doc.user != decoded.user._id) {
-            return res.status(401).json({
-                title: 'Not Authorized',
-                error: {message: 'Message created by other user'}
             });
         }
         doc.remove(function(err, result) {
