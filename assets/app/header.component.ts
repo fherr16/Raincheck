@@ -4,10 +4,12 @@ import { ROUTER_DIRECTIVES } from "@angular/router";
     selector: 'my-header',
     template: `
         <header class="row">
-            <nav class="col-md-8 col-md-offset-2">
-                <ul class="nav nav-pills">
-                    <li><a [routerLink]="['']">Messages</a></li>
-                    <li><a [routerLink]="['/friendlist']">Friend List</a></li>
+            <nav class="col-sm-12">
+                <div class="logo">
+                    <a [routerLink]="['']">Raincheck</a>
+                </div>
+                <ul class="nav-links">
+                    <li><a [routerLink]="['/']">Friend List</a></li>
                     <li><a [routerLink]="['/auth']">Authentication</a></li>
                 </ul>
             </nav>
@@ -17,20 +19,25 @@ import { ROUTER_DIRECTIVES } from "@angular/router";
     styles: [`
         header {
             margin-bottom: 20px;
+            border-bottom: solid 1px;
+        }
+
+        .logo {
+            display: inline-block;
+            margin: 20px;
         }
     
-        ul {
-          text-align: center;  
+        .nav-links {
+            display: inline-block;
+            float: right;
+            padding: 0;
+            margin: 20px;
         }
         
         li {
             float: none;
             display: inline-block;
-        }
-        
-        .router-link-active {
-            background-color: #337ab7;
-            color: white;
+            padding-left: 10px;
         }
     `]
 })

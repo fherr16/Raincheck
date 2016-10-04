@@ -8,7 +8,7 @@ import { ErrorService } from "../errors/error.service";
 @Component({
     selector: 'my-friend-list',
     template: `
-        <section class="col-md-8 col-md-offset-2">
+        <section class="col-md-8 col-md-offset-2 friendlist">
             <my-friend *ngFor="let friend of friends" [friend]="friend"></my-friend>
 
             <my-user-list [friends]="friends"></my-user-list>

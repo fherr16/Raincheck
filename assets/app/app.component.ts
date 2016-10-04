@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 
 import { FriendListComponent } from "./friends/friend-list.component";
-import { MessagesComponent } from "./messages/messages.component";
 import { AuthenticationComponent } from "./auth/authentication.component";
 import { HeaderComponent } from "./header.component";
 import { ErrorComponent } from "./errors/error.component";
@@ -18,8 +17,7 @@ import { ErrorComponent } from "./errors/error.component";
     directives: [ROUTER_DIRECTIVES, HeaderComponent, ErrorComponent]
 })
 @Routes([
-    {path: '/', component: MessagesComponent},
-    {path: '/friendlist', component: FriendListComponent},
+    {path: '/', component: FriendListComponent},
     {path: '/auth', component: AuthenticationComponent}
 ])
 export class AppComponent {

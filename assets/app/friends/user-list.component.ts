@@ -8,12 +8,26 @@ import { ErrorService } from "../errors/error.service";
     selector: 'my-user-list',
     template: `
         <section class="col-md-8 col-md-offset-2">
-            <ul *ngFor="let user of users">
-                <li>{{user.firstName}}<button class="btn btn-xs btn-primary" (click)="onAdd(user)" *ngIf="friends">Add</button></li>
+            <ul class="friendlist">
+                <li class="list-user" *ngFor="let user of users">{{user.firstName}}<button class="btn btn-xs btn-success user-button" (click)="onAdd(user)" *ngIf="friends">Add</button></li>
             </ul>
 
         </section>
-    `
+    `,
+    styles: [`
+        .friendlist {
+            list-style-type: none;
+            text-align: right;
+        }
+
+        .list-user {
+            padding: 4px;
+        }
+        
+        .user-button {
+            margin-left: 3px;
+        }
+    `]
 })
 export class UserListComponent implements OnInit {
 
