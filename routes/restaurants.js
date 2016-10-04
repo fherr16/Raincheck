@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 
-var Restaurant = require('../models/restaurant');
+var Restaurant = require('../models/rest');
 
 router.post('/', function(req, res, next) {
    var restaurant = new Restaurant({

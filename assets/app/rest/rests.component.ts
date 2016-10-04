@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
+import { ErrorService } from "../errors/error.service";
 
-import {AuthService} from "../auth/auth.service";
 import {Rest} from "./rest";
 import {RestService} from "./rest.service";
 
@@ -13,5 +13,15 @@ import {RestService} from "./rest.service";
 
 export class RestComponent{
   rests: Rest[];
-  constructor(private heroService: RestService) { }
+
+  constructor(private restService: RestService, private _errorService: ErrorService) { }
+
+  add(name:string, address:string, rating:number): void{
+    const rest = new Rest(name, address, rating);
+    this.restService.create(rest)
+      .subscribe(
+          data => console.log(data),
+          error => this._errorService.handleError(error)
+      )
+  }
 }
