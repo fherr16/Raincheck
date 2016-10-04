@@ -6,7 +6,7 @@ import { ROUTER_DIRECTIVES } from "@angular/router";
         <header class="row">
             <nav class="col-sm-12">
                 <div class="logo">
-                    <a [routerLink]="['']">Raincheck</a>
+                    <a [routerLink]="['/']">Raincheck</a>
                 </div>
                 <ul class="nav-links">
                     <li><a [routerLink]="['/']">Friend List</a></li>

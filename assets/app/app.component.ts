@@ -10,7 +10,10 @@ import { ErrorComponent } from "./errors/error.component";
     template: ` 
         <div class="container">
             <my-header></my-header>
-            <router-outlet></router-outlet>
+            <div class="row">
+                
+                <router-outlet class="col-md-8"></router-outlet>
+            </div>
         </div>
         <my-error></my-error>
     `,
