@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 
+import { RestComponent } from "./rest/rests.component";
 import { AuthenticationComponent } from "./auth/authentication.component";
 import { HeaderComponent } from "./header.component";
 import { ErrorComponent } from "./errors/error.component";
@@ -14,9 +15,10 @@ import { ErrorComponent } from "./errors/error.component";
         <my-error></my-error>
     `,
     directives: [ROUTER_DIRECTIVES, HeaderComponent, ErrorComponent]
-})
+  })
 @Routes([
-    {path: '/', component: AuthenticationComponent}
+    {path: '/auth', component: AuthenticationComponent},
+    {path: '/rest', component: RestComponent}
 ])
 export class AppComponent {
 

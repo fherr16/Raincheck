@@ -1,15 +1,4 @@
-<h1> My Restaurants </h1>
-<div>
-  <label> Name: </label><input #restName />
-  <label> Address: </label><input #restAddress />
-  <label> Rating: </label><inpit #restRating />
-  <button (click)="add(restName.value, restAddress.value, restRating.value);
-                              restName.value=''";
-                              restAddress.value="";
-                              restRating.value="Optional">
-    Add
-  </button>
-</div>
+
 
 <ul class="rests">
 <li *ngFor="let rest of rests" (click)="onSelect(rest)"

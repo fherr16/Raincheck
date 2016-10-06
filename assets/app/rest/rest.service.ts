@@ -13,9 +13,10 @@ export class RestService {
 
   create(rest: Rest)
   {
+    console.log("I'm now creating");
     const body = JSON.stringify(rest);
     const header = new Headers({'Content-Type':'application/json'});
-    return this.http.post('http://localhost:3000/rest', body, {headers:header})
+    return this.http.post(this.restURL, body, {headers:header})
       .map(response => response.json())
       .catch(error => Observable.throw(error.json()));
   }

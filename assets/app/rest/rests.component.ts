@@ -1,20 +1,30 @@
 import { Component, OnInit } from "@angular/core";
 import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 import { ErrorService } from "../errors/error.service";
+import { Router } from '@angular/router';
 
 import {Rest} from "./rest";
 import {RestService} from "./rest.service";
 
 @Component({
   selector: "my-rests",
-  templateUrl: "app/rest/rests.component.html",
-  styleUrls: ["app/rest/rests.component.css"]
+  template: `
+  <h1> My Restaurants </h1>
+  <div>
+    <label> Name: </label><input #restName />
+    <label> Address: </label><input #restAddress />
+    <label> Rating: </label><input #restRating />
+    <button (click)="add(restName.value, restAddress.value, restRating.value); restName.value=''">
+      Add
+    </button>
+  </div>
+  `,
 })
 
 export class RestComponent{
   rests: Rest[];
 
-  constructor(private restService: RestService, private _errorService: ErrorService) { }
+  constructor(private router: Router, private restService: RestService, private _errorService: ErrorService) { }
 
   add(name:string, address:string, rating:number): void{
     const rest = new Rest(name, address, rating);
