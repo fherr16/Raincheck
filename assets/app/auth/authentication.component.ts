@@ -3,8 +3,10 @@ import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 
 import { SignupComponent } from "./signup.component";
 import { SigninComponent } from "./signin.component";
+import { RestComponent } from "../rest/rests.component";
 import { LogoutComponent } from "./logout.component";
 import { AuthService } from "./auth.service";
+
 @Component({
     selector: 'my-auth',
     template: `
@@ -33,9 +35,10 @@ import { AuthService } from "./auth.service";
     `]
 })
 @Routes([
-    {path: '/signup', component: SignupComponent},
-    {path: '/signin', component: SigninComponent},
-    {path: '/logout', component: LogoutComponent}
+    {path: 'signup', component: SignupComponent},
+    {path: 'signin', component: SigninComponent},
+    {path: 'logout', component: LogoutComponent},
+    {path:'rest', component:RestComponent}
 ])
 export class AuthenticationComponent {
     constructor (private _authService: AuthService) {}

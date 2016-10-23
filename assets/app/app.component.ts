@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 
-import { MessagesComponent } from "./messages/messages.component";
+import { RestComponent } from "./rest/rests.component";
 import { AuthenticationComponent } from "./auth/authentication.component";
 import { HeaderComponent } from "./header.component";
 import { ErrorComponent } from "./errors/error.component";
 @Component({
     selector: 'my-app',
-    template: ` 
+    template: `
         <div class="container">
             <my-header></my-header>
             <router-outlet></router-outlet>
@@ -15,11 +15,11 @@ import { ErrorComponent } from "./errors/error.component";
         <my-error></my-error>
     `,
     directives: [ROUTER_DIRECTIVES, HeaderComponent, ErrorComponent]
-})
+  })
 @Routes([
-    {path: '/', component: MessagesComponent},
-    {path: '/auth', component: AuthenticationComponent}
+    {path: '/auth', component: AuthenticationComponent},
+    {path: '/rest', component: RestComponent}
 ])
 export class AppComponent {
-    
+
 }
