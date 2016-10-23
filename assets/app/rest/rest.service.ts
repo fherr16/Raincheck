@@ -20,4 +20,19 @@ export class RestService {
       .map(response => response.json())
       .catch(error => Observable.throw(error.json()));
   }
+
+  delete(id: String)
+  {
+    console.log("Deleting Now" + id);
+    return this.http.delete(`${this.restURL}/${id}`)
+      .map(response => response.json())
+      .catch(error => Observable.throw(error.json()));
+  }
+
+  getRests():Observable<Rest[]>{
+    console.log("About to get the Rests");
+    return this.http.get(this.restURL)
+                .map(response => response.json().obj)
+                .catch(error => Observable.throw(error.json()));
+  }
 }

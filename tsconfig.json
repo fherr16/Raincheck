@@ -1438,6 +1438,8 @@
     "public/js/vendor/zone.js/lib/common/timers.ts",
     "public/js/vendor/zone.js/lib/common/utils.ts",
     "public/js/vendor/zone.js/lib/jasmine/jasmine.ts",
+    "public/js/vendor/zone.js/lib/node/events.ts",
+    "public/js/vendor/zone.js/lib/node/fs.ts",
     "public/js/vendor/zone.js/lib/node/node.ts",
     "public/js/vendor/zone.js/lib/zone-spec/async-test.ts",
     "public/js/vendor/zone.js/lib/zone-spec/fake-async-test.ts",

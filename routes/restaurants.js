@@ -17,11 +17,37 @@ router.post('/', function(req, res, next) {
                 error: err
             });
         }
-        res.status(200).json({
+        res.status(201).json({
             message: 'Success',
             obj: result
         });
     });
 });
+
+router.delete('/:id', function(req, res){
+  Rest.remove({_id: req.params.id}, function(err,result)
+  {
+    res.status(200).json({
+      message:'Success',
+      obj: result
+    });
+  })
+});
+
+router.get('/', function(req, res, next) {
+  Rest.find()
+  .exec(function(err, docs) {
+    if(err){
+      return res.status(404).json({
+        title: "Not Found",
+        error: err
+      });
+    }
+    res.status(200).json({
+      message: "Success",
+      obj: docs
+    });
+  })
+})
 
 module.exports = router;
