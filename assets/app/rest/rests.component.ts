@@ -14,7 +14,7 @@ import {RestService} from "./rest.service";
     <label> Name: </label><input #restName />
     <label> Address: </label><input #restAddress />
     <label> Rating: </label><input #restRating />
-    <button (click)="add(restName.value, restAddress.value, restRating.value); restName.value=''">
+    <button (click)="add(restName.value, restAddress.value, restRating.value);restName.value=null;restRating.value=null;restAddress.value=null">
       Add
     </button>
   </div>
@@ -22,7 +22,7 @@ import {RestService} from "./rest.service";
 <h4> Current Restaurants </h4>
   <ul *ngFor="let rest of rests">
     <li>
-        <span> Name: {{name}}</span>
+        <span> Name: {{rest.name}}</span>
         <span> Address: {{rest.address}}</span>
         <span> Rating: {{rest.rating}}</span>
         <button (click)="delete(rest._id, rest)">Delete</button>
@@ -46,7 +46,7 @@ export class RestComponent implements OnInit{
             if(data.message == "Success")
               this.rests.push(rest)
           },
-          error => this._errorService.handleError(error),
+          error => this._errorService.handleError(error)
       )
   }
 
