@@ -6,30 +6,27 @@ import { ErrorService } from "../errors/error.service";
 @Component({
     selector: 'my-friend',
     template: `
-        <article class="panel panel-default">
-            <div class="panel-body">
-                {{ friend.firstName }}
-            </div>
-            <footer class="panel-footer">
- 
-                <div class="config">
-                    <a (click)="onDelete()">Delete</a>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="contact">
+                    {{ friend.firstName }}
+                    <div class="admin-delete">
+                        <a (click)="onDelete()">Delete</a>
+                    </div>
                 </div>
-            </footer>
-        </article>
+            </div>
+        </div>
     `,
     styles: [`
-        .author {
+        .contact {
             display: inline-block;
-            font-style: italic;
+            border-bottom: solid 1px;
             font-size: 12px;
-            width: 80%;
+            width: 100%;
         }
-        .config {
+        .admin-delete {
             display: inline-block;
             text-align: right;
-            font-size: 12px;
-            width: 19%;
         }
     `]
 })

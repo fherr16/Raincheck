@@ -9,7 +9,7 @@ import { ErrorService } from "../errors/error.service";
     template: `
         <section class="col-md-8 col-md-offset-2">
             <ul class="friendlist">
-                <li class="list-user" *ngFor="let user of users">{{user.firstName}}<button class="btn btn-xs btn-success user-button" (click)="onAdd(user)" *ngIf="friends">Add</button></li>
+                <li class="list-user" *ngFor="let user of users">{{user.firstName}}<button class="btn btn-xs btn-success user-button" (click)="onAdd(user)" *ngIf="friends">ADD</button></li>
             </ul>
 
         </section>
@@ -48,14 +48,24 @@ export class UserListComponent implements OnInit {
     }
 
     onAdd(user: Friend) {
-        this._friendService.addFriend(user)
-            .subscribe(
-                        data => {
-                            console.log(data);
-                            this._friendService.friends.push(data);
-                        },
-                        error => this._errorService.handleError(error)
-                    );
+        var hasFriend = false;
+        var id = user.userId;
 
+        for(var i = 0;i < this.friends.length; i++) {
+            if(user.userId == this.friends[i].userId) {
+                hasFriend = true;
+            }
+        }
+
+        if(!hasFriend) {
+            this._friendService.addFriend(user)
+                .subscribe(
+                    data => {
+                        console.log(data);
+                        this._friendService.friends.push(data);
+                    },
+                    error => this._errorService.handleError(error)
+                );
+        }     
     }  
 }
