@@ -77,6 +77,5 @@ export class RestComponent implements OnInit{
             .subscribe(
               rests => this.rests = rests,
               error => this._errorService= <any>error);
-    console.log("Finished with getRests()");
   }
 }
