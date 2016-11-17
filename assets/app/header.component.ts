@@ -27,32 +27,18 @@ import { ROUTER_DIRECTIVES } from "@angular/router";
             display: inline-block;
             margin: 20px;
         }
-<<<<<<< HEAD
     
         .nav-links {
             display: inline-block;
             float: right;
             padding: 0;
             margin: 20px;
-=======
-
-        ul {
-          text-align: center;
->>>>>>> master
         }
 
         li {
             float: none;
             display: inline-block;
-<<<<<<< HEAD
             padding-left: 10px;
-=======
-        }
-
-        .router-link-active {
-            background-color: #337ab7;
-            color: white;
->>>>>>> master
         }
     `]
 })
