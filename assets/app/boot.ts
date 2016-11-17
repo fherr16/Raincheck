@@ -5,10 +5,12 @@ import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 import { provide } from "@angular/core";
 import { HTTP_PROVIDERS } from "@angular/http";
 
+import {RestComponent} from "./rest/rests.component";
+import {RestService} from "./rest/rest.service";
 import { AppComponent } from "./app.component";
 import { FriendService } from "./friends/friend.service";
 import { MessageService } from "./messages/message.service";
 import { AuthService } from "./auth/auth.service";
 import { ErrorService } from "./errors/error.service";
 
-bootstrap(AppComponent, [FriendService, MessageService, AuthService, ErrorService, ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy}), HTTP_PROVIDERS]);
+bootstrap(AppComponent, [RestService, FriendService, MessageService, AuthService, ErrorService, ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy}), HTTP_PROVIDERS]);
