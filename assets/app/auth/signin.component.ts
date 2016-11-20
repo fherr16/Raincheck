@@ -8,18 +8,20 @@ import { ErrorService } from "../errors/error.service";
 @Component({
     selector: 'my-signin',
     template: `
-        <section class="col-md-8 col-md-offset-2">
-            <form [ngFormModel]="myForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="email">Mail</label>
-                    <input [ngFormControl]="myForm.find('email')" type="email" id="email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input [ngFormControl]="myForm.find('password')" type="password" id="password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Sign Up</button>
-            </form>
+        <section class="col-sm-12">
+            <div class="jumbotron col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+                <form [ngFormModel]="myForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input [ngFormControl]="myForm.find('email')" type="email" id="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input [ngFormControl]="myForm.find('password')" type="password" id="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Sign Up</button>
+                </form>
+            </div>
         </section>
     `
 })
@@ -35,7 +37,7 @@ export class SigninComponent implements OnInit {
                 data => {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('userId', data.userId);
-                    this._router.navigateByUrl('/');
+                    this._router.navigateByUrl('/friends');
                 },
                 error => this._errorService.handleError(error)
             );
