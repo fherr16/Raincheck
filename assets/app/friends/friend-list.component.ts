@@ -3,12 +3,13 @@ import { Component, OnInit } from "@angular/core";
 import { FriendComponent } from "./friend.component";
 import { UserListComponent } from "./user-list.component";
 import { Friend } from "./friend";
+import { AuthService } from "./../auth/auth.service";
 import { FriendService } from "./friend.service";
 import { ErrorService } from "../errors/error.service";
 @Component({
     selector: 'my-friend-list',
     template: `   
-        <section class="col-md-8 col-md-offset-2">
+        <section class="col-md-8 col-md-offset-2" *ngIf="isLoggedIn()">
             <my-friend *ngFor="let friend of friends" [friend]="friend"></my-friend>
             <my-user-list [friends]="friends"></my-user-list>
         </section>
@@ -17,7 +18,7 @@ import { ErrorService } from "../errors/error.service";
 })
 export class FriendListComponent implements OnInit {
 
-    constructor(private _friendService: FriendService, private _errorService: ErrorService) {}
+    constructor(private _authService: AuthService, private _friendService: FriendService, private _errorService: ErrorService) {}
 
     friends: Friend[];
 
@@ -30,5 +31,9 @@ export class FriendListComponent implements OnInit {
                 },
                 error => this._errorService.handleError(error)
             );
-    }   
+    }
+
+    isLoggedIn() {
+        return this._authService.isLoggedIn();
+    }
 }
