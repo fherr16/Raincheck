@@ -6,6 +6,7 @@ var Rest = require('../models/rest');
 
 router.post('/', function(req, res, next) {
    var restaurant = new Rest({
+       userId: req.body.userId,
        name: req.body.name,
        address: req.body.address,
        rating: req.body.rating
@@ -33,6 +34,22 @@ router.delete('/:id', function(req, res){
     });
   })
 });
+
+router.get('/:id', function(req, res, next) {
+  Rest.find({userId: req.params.id})
+  .exec(function(err, docs) {
+    if(err){
+      return res.status(404).json({
+        title: "Not Found",
+        error: err
+      });
+    }
+    res.status(200).json({
+      message: "Success",
+      obj: docs
+    });
+  })
+})
 
 router.get('/', function(req, res, next) {
   Rest.find()

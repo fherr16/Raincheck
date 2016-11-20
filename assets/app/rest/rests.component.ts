@@ -6,13 +6,12 @@ import { Router } from '@angular/router';
 import {Rest} from "./rest";
 import {AuthService} from "./../auth/auth.service";
 import {RestService} from "./rest.service";
-import {RestList} from "./restList";
-import {RestListService} from "./restList.service";
 
 @Component({
   selector: "my-rests",
   template: `
   <div *ngIf="isLoggedIn()">
+
     <h1> My Restaurants </h1>
     <div>
       <label> Name: </label><input #restName />
@@ -23,122 +22,58 @@ import {RestListService} from "./restList.service";
       </button>
     </div>
 
-<div style="border:1px solid">
-  <h4> Current Restaurants In DB</h4>
-    <ul *ngFor="let rest of rests">
-      <li>
-          <span> Name: {{rest.name}}</span>
-          <span> Address: {{rest.address}}</span>
-          <span> Rating: {{rest.rating}}</span>
-          <button (click)="deleteRest(rest._id, rest)">Delete</button>
-          </li>
-    </ul>
-</div>
+    <div style="border:1px solid">
+      <h4> Current Restaurants In DB</h4>
+      <ul *ngFor="let rest of rests">
+        <li>
+            <span> Name: {{rest.name}}</span>
+            <span> Address: {{rest.address}}</span>
+            <span> Rating: {{rest.rating}}</span>
+            <button (click)="delete(rest._id, rest)">Delete</button>
+            </li>
+      </ul>
+    </div>
 
-<div style="border:1px solid">
-  <h4> My Actual List</h4>
-    <ul *ngFor="let rest of myRestList">
-      <li>
-          <span> Name: {{rest.name}}</span>
-          <span> Address: {{rest.address}}</span>
-          <span> Rating: {{rest.rating}}</span>
-          <button (click)="deleteMyRestList(rest._id, rest)">Delete</button>
-          </li>
-    </ul>
-</div>
+    <div style="border:1px solid">
+      <h4> User Rests</h4>
+      <ul *ngFor="let rest of userRests">
+        <li>
+            <span> Name: {{rest.name}}</span>
+            <span> Address: {{rest.address}}</span>
+            <span> Rating: {{rest.rating}}</span>
+            <button (click)="delete(rest._id, rest)">Delete</button>
+            </li>
+      </ul>
+    </div>
 
-<div style="border:1px solid">
-  <h4>All RestList Items</h4>
-    <ul *ngFor="let rest of restsList">
-      <li>
-          <span> userID: {{rest.userId}}</span>
-          <span> restID: {{rest.restId}}</span>
-          <button (click)="deleteRestList(rest._id, rest)">Delete</button>
-          </li>
-    </ul>
-</div>
+  </div>
   `,
 })
 
 export class RestComponent implements OnInit{
-  rests: Rest[] = [];
-  restsList: RestList[] = [];
-  myRestList: Rest[] = [];
+  rests: Rest[];
+  userRests: Rest[];
 
-  constructor(private router: Router, private _authService: AuthService, private restService: RestService, private _errorService: ErrorService, private restListService: RestListService) { }
+  constructor(private router: Router, private _authService: AuthService, private restService: RestService, private _errorService: ErrorService) { }
 
   add(name:string, address:string, rating:number): void{
-    const rest = new Rest(name, address, rating);
+    const rest = new Rest(localStorage.getItem('userId'), name, address, rating);
     this.restService.create(rest)
       .subscribe(
           data =>
           {
             console.log(data)
-            if(data.message == "Success"){
-                this.rests.push(rest);
-                this.myRestList.push(rest);
-                const restList = new RestList(localStorage.getItem('userId'), data.obj._id);
-                this.restListService.create(restList)
-                .subscribe(
-                  data =>
-                  {
-                    console.log(data)
-                    if(data.message == "Success"){
-                      this.restsList.push(restList);
-                    }
-                  },
-                error => this._errorService.handleError(error)
-              )
+            if(data.message == "Success")
+            {
+              this.rests.push(rest); //Can erase when we don't want to show all Rests
+              this.userRests.push(rest);
             }
           },
           error => this._errorService.handleError(error)
       )
   }
 
-  deleteMyRestList(id: String, rest: Rest):void
-  {
-
-    for(var i = 0; i < this.restsList.length; i++)
-      if(this.restsList[i].restId == id)
-      {
-        var _id = this.restsList[i]._id
-        var loc = i
-      }
-
-    this.restListService.delete(_id)
-      .subscribe(
-        data =>
-        {
-          console.log(data)
-          if(data.message == "Success")
-          {
-            var index = this.myRestList.indexOf(rest)
-            this.myRestList.splice(index, 1)
-            this.restsList.splice(loc, 1)
-          }
-        },
-        error => this._errorService.handleError(error)
-      )
-  }
-
-  deleteRestList(id: String, restList: RestList):void
-  {
-    this.restListService.delete(id)
-      .subscribe(
-        data =>
-        {
-          console.log(data)
-          if(data.message == "Success")
-          {
-            var index = this.restsList.indexOf(restList)
-            this.restsList.splice(index, 1)
-          }
-        },
-        error => this._errorService.handleError(error)
-      )
-  }
-
-  deleteRest(id: String, rest: Rest):void
+  delete(id: String, rest: Rest):void
   {
     this.restService.delete(id)
       .subscribe(
@@ -147,8 +82,8 @@ export class RestComponent implements OnInit{
           console.log(data)
           if(data.message == "Success")
           {
-            var index = this.rests.indexOf(rest)
-            this.rests.splice(index, 1)
+            this.rests.splice(this.rests.indexOf(rest), 1); //Can erase when we don't want to show all Rests
+            this.userRests.splice(this.userRests.indexOf(rest), 1);
           }
         },
         error => this._errorService.handleError(error)
@@ -156,30 +91,20 @@ export class RestComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.getRests();
-    this.getRestLists();
+    this.get();
+    this.getAll();
   }
 
-  getRestLists(){
-    this.restListService.getRestsList()
-            .subscribe(
-              restsList => {
-                this.restsList = restsList;
-
-                for(var i = 0; i < this.restsList.length; i++){
-                  if(this.restsList[i].userId == localStorage.getItem('userId')){
-                    for(var j = 0; j < this.rests.length; j++){
-                      if(this.rests[j]._id == this.restsList[i].restId){
-                        this.myRestList.push(this.rests[j]);
-                      }
-                    }
-                  }
-                }
-              },
-              error => this._errorService= <any>error);
+  get()
+  {
+    this.restService.get(localStorage.getItem('userId'))
+      .subscribe(
+        userRests => this.userRests = userRests,
+        error => this._errorService = <any>error
+      );
   }
 
-  getRests()
+  getAll()
   {
     this.restService.getRests()
             .subscribe(
