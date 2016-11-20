@@ -4,6 +4,7 @@ import { ErrorService } from "../errors/error.service";
 import { Router } from '@angular/router';
 
 import {Rest} from "./rest";
+import {AuthService} from "./../auth/auth.service";
 import {RestService} from "./rest.service";
 import {RestList} from "./restList";
 import {RestListService} from "./restList.service";
@@ -11,15 +12,16 @@ import {RestListService} from "./restList.service";
 @Component({
   selector: "my-rests",
   template: `
-  <h1> My Restaurants </h1>
-  <div>
-    <label> Name: </label><input #restName />
-    <label> Address: </label><input #restAddress />
-    <label> Rating: </label><input #restRating />
-    <button (click)="add(restName.value, restAddress.value, restRating.value);restName.value=null;restRating.value=null;restAddress.value=null">
-      Add
-    </button>
-  </div>
+  <div *ngIf="isLoggedIn()">
+    <h1> My Restaurants </h1>
+    <div>
+      <label> Name: </label><input #restName />
+      <label> Address: </label><input #restAddress />
+      <label> Rating: </label><input #restRating />
+      <button (click)="add(restName.value, restAddress.value, restRating.value);restName.value=null;restRating.value=null;restAddress.value=null">
+        Add
+      </button>
+    </div>
 
 <div style="border:1px solid">
   <h4> Current Restaurants In DB</h4>
@@ -40,7 +42,7 @@ import {RestListService} from "./restList.service";
           <span> Name: {{rest.name}}</span>
           <span> Address: {{rest.address}}</span>
           <span> Rating: {{rest.rating}}</span>
-          <button (click)="deleteMyRest(rest._id, rest)">Delete</button>
+          <button (click)="deleteMyRestList(rest._id, rest)">Delete</button>
           </li>
     </ul>
 </div>
@@ -63,7 +65,7 @@ export class RestComponent implements OnInit{
   restsList: RestList[] = [];
   myRestList: Rest[] = [];
 
-  constructor(private router: Router, private restService: RestService, private _errorService: ErrorService, private restListService: RestListService) { }
+  constructor(private router: Router, private _authService: AuthService, private restService: RestService, private _errorService: ErrorService, private restListService: RestListService) { }
 
   add(name:string, address:string, rating:number): void{
     const rest = new Rest(name, address, rating);
@@ -90,6 +92,32 @@ export class RestComponent implements OnInit{
             }
           },
           error => this._errorService.handleError(error)
+      )
+  }
+
+  deleteMyRestList(id: String, rest: Rest):void
+  {
+
+    for(var i = 0; i < this.restsList.length; i++)
+      if(this.restsList[i].restId == id)
+      {
+        var _id = this.restsList[i]._id
+        var loc = i
+      }
+
+    this.restListService.delete(_id)
+      .subscribe(
+        data =>
+        {
+          console.log(data)
+          if(data.message == "Success")
+          {
+            var index = this.myRestList.indexOf(rest)
+            this.myRestList.splice(index, 1)
+            this.restsList.splice(loc, 1)
+          }
+        },
+        error => this._errorService.handleError(error)
       )
   }
 
@@ -158,4 +186,8 @@ export class RestComponent implements OnInit{
               rests => this.rests = rests,
               error => this._errorService= <any>error);
   }
+
+  isLoggedIn() {
+        return this._authService.isLoggedIn();
+    }
 }

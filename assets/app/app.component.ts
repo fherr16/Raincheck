@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 
+import { HomeComponent } from "./home/home.component";
 import { FriendListComponent } from "./friends/friend-list.component";
 import { RestComponent } from "./rest/rests.component";
-import { AuthenticationComponent } from "./auth/authentication.component";
+import { SigninComponent } from "./auth/signin.component";
+import { LogoutComponent } from "./auth/logout.component";
 import { HeaderComponent } from "./header.component";
 import { ErrorComponent } from "./errors/error.component";
 @Component({
@@ -21,8 +23,10 @@ import { ErrorComponent } from "./errors/error.component";
     directives: [ROUTER_DIRECTIVES, HeaderComponent, ErrorComponent]
   })
 @Routes([
-    {path: '/', component: FriendListComponent},
-    {path: '/auth', component: AuthenticationComponent},
+    {path: '/', component: HomeComponent},
+    {path: '/friends', component: FriendListComponent},
+    {path: '/signin', component: SigninComponent},
+    {path: '/logout', component: LogoutComponent},
     {path: '/rest', component: RestComponent}
 ])
 export class AppComponent {
