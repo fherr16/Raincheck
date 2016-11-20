@@ -23,9 +23,20 @@ router.post('/', function(req, res, next) {
     });
 });
 
+router.delete('/:id', function(req, res){
+  RestList.remove({_id: req.params.id}, function(err,result)
+  {
+    res.status(200).json({
+      message:'Success',
+      obj: result
+    });
+  })
+});
+
 router.get('/', function(req, res, next) {
   RestList.find()
-  .exec(function(err, docs) {
+  .exec(function(err, docs)
+  {
     if(err){
       return res.status(404).json({
         title: "Not Found",
