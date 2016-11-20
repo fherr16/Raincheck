@@ -10,6 +10,7 @@ var appRoutes = require('./routes/app');
 var friendListRoutes = require('./routes/friends');
 var userRoutes = require('./routes/users');
 var restRoutes = require('./routes/restaurants');
+var restListRoutes = require('./routes/restLists');
 
 var app = express();
 mongoose.connect('localhost:27017/node-angular');
@@ -32,6 +33,7 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use('/restList', restListRoutes);
 app.use('/friendlist', friendListRoutes);
 app.use('/user', userRoutes);
 app.use('/rest', restRoutes);

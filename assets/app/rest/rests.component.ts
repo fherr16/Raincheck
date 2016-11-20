@@ -1,10 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 import { ErrorService } from "../errors/error.service";
 import { Router } from '@angular/router';
 
 import {Rest} from "./rest";
 import {RestService} from "./rest.service";
+import {RestList} from "./restList";
+import {RestListService} from "./restList.service";
 
 @Component({
   selector: "my-rests",
@@ -19,22 +21,47 @@ import {RestService} from "./rest.service";
     </button>
   </div>
 
-<h4> Current Restaurants </h4>
-  <ul *ngFor="let rest of rests">
-    <li>
-        <span> Name: {{rest.name}}</span>
-        <span> Address: {{rest.address}}</span>
-        <span> Rating: {{rest.rating}}</span>
-        <button (click)="delete(rest._id, rest)">Delete</button>
-    </li>
-  </ul>
+<div style="border:1px solid">
+  <h4> Current Restaurants In DB</h4>
+    <ul *ngFor="let rest of rests">
+      <li>
+          <span> Name: {{rest.name}}</span>
+          <span> Address: {{rest.address}}</span>
+          <span> Rating: {{rest.rating}}</span>
+          <button (click)="delete(rest._id, rest)">Delete</button>
+          </li>
+    </ul>
+</div>
+
+<div style="border:1px solid">
+  <h4> Current Restaurants In DB</h4>
+    <ul *ngFor="let rest of myRestList">
+      <li>
+          <span> Name: {{rest.name}}</span>
+          <span> Address: {{rest.address}}</span>
+          <span> Rating: {{rest.rating}}</span>
+          </li>
+    </ul>
+</div>
+
+<div style="border:1px solid">
+  <h4> My Restaurants</h4>
+    <ul *ngFor="let rest of restsList">
+      <li>
+          <span> userID: {{rest.userId}}</span>
+          <span> restID: {{rest.restId}}</span>
+          </li>
+    </ul>
+</div>
   `,
 })
 
 export class RestComponent implements OnInit{
   rests: Rest[];
+  restsList: RestList[];
+  myRestList: Rest[] = [ ];
 
-  constructor(private router: Router, private restService: RestService, private _errorService: ErrorService) { }
+  constructor(private router: Router, private restService: RestService, private _errorService: ErrorService, private restListService: RestListService) { }
 
   add(name:string, address:string, rating:number): void{
     const rest = new Rest(name, address, rating);
@@ -43,8 +70,21 @@ export class RestComponent implements OnInit{
           data =>
           {
             console.log(data)
-            if(data.message == "Success")
-              this.rests.push(rest)
+            if(data.message == "Success"){
+                this.rests.push(rest);
+                const restList = new RestList("1", data.obj._id);
+                this.restListService.create(restList)
+                .subscribe(
+                  data =>
+                  {
+                    console.log(data)
+                    if(data.message == "Success"){
+                      this.restsList.push(restList);
+                    }
+                  },
+                error => this._errorService.handleError(error)
+              )
+            }
           },
           error => this._errorService.handleError(error)
       )
@@ -69,6 +109,24 @@ export class RestComponent implements OnInit{
 
   ngOnInit(){
     this.getRests();
+    this.getRestLists();
+  }
+
+  getRestLists(){
+    this.restListService.getRestsList()
+            .subscribe(
+              restsList => {
+                this.restsList = restsList;
+
+                for(var i = 0; i < this.restsList.length; i++){
+                  for(var j = 0; j < this.rests.length; j++){
+                    if(this.rests[j]._id == this.restsList[i].restId){
+                      this.myRestList.push(this.rests[j]);
+                    }
+                  }
+                }
+              },
+              error => this._errorService= <any>error);
   }
 
   getRests()
