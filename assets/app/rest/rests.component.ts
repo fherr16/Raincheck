@@ -28,13 +28,13 @@ import {RestListService} from "./restList.service";
           <span> Name: {{rest.name}}</span>
           <span> Address: {{rest.address}}</span>
           <span> Rating: {{rest.rating}}</span>
-          <button (click)="delete(rest._id, rest)">Delete</button>
+          <button (click)="deleteRest(rest._id, rest)">Delete</button>
           </li>
     </ul>
 </div>
 
 <div style="border:1px solid">
-  <h4> Current Restaurants In DB</h4>
+  <h4> My Actual List</h4>
     <ul *ngFor="let rest of myRestList">
       <li>
           <span> Name: {{rest.name}}</span>
@@ -45,11 +45,12 @@ import {RestListService} from "./restList.service";
 </div>
 
 <div style="border:1px solid">
-  <h4> My Restaurants</h4>
+  <h4>All RestList Items</h4>
     <ul *ngFor="let rest of restsList">
       <li>
           <span> userID: {{rest.userId}}</span>
           <span> restID: {{rest.restId}}</span>
+          <button (click)="deleteRestList(rest._id, rest)">Delete</button>
           </li>
     </ul>
 </div>
@@ -57,9 +58,9 @@ import {RestListService} from "./restList.service";
 })
 
 export class RestComponent implements OnInit{
-  rests: Rest[];
-  restsList: RestList[];
-  myRestList: Rest[] = [ ];
+  rests: Rest[] = [];
+  restsList: RestList[] = [];
+  myRestList: Rest[] = [];
 
   constructor(private router: Router, private restService: RestService, private _errorService: ErrorService, private restListService: RestListService) { }
 
@@ -72,7 +73,8 @@ export class RestComponent implements OnInit{
             console.log(data)
             if(data.message == "Success"){
                 this.rests.push(rest);
-                const restList = new RestList("1", data.obj._id);
+                this.myRestList.push(rest);
+                const restList = new RestList(localStorage.getItem('userId'), data.obj._id);
                 this.restListService.create(restList)
                 .subscribe(
                   data =>
@@ -90,7 +92,24 @@ export class RestComponent implements OnInit{
       )
   }
 
-  delete(id: String, rest: Rest):void
+  deleteRestList(id: String, restList: RestList):void
+  {
+    this.restListService.delete(id)
+      .subscribe(
+        data =>
+        {
+          console.log(data)
+          if(data.message == "Success")
+          {
+            var index = this.restsList.indexOf(restList)
+            this.restsList.splice(index, 1)
+          }
+        },
+        error => this._errorService.handleError(error)
+      )
+  }
+
+  deleteRest(id: String, rest: Rest):void
   {
     this.restService.delete(id)
       .subscribe(
@@ -119,9 +138,11 @@ export class RestComponent implements OnInit{
                 this.restsList = restsList;
 
                 for(var i = 0; i < this.restsList.length; i++){
-                  for(var j = 0; j < this.rests.length; j++){
-                    if(this.rests[j]._id == this.restsList[i].restId){
-                      this.myRestList.push(this.rests[j]);
+                  if(this.restsList[i].userId == localStorage.getItem('userId')){
+                    for(var j = 0; j < this.rests.length; j++){
+                      if(this.rests[j]._id == this.restsList[i].restId){
+                        this.myRestList.push(this.rests[j]);
+                      }
                     }
                   }
                 }

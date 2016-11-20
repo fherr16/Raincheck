@@ -20,6 +20,13 @@ export class RestListService {
       .catch(error => Observable.throw(error.json()));
   }
 
+  delete(id: String)
+  {
+    return this.http.delete(`${this.restListURL}/${id}`)
+      .map(response => response.json())
+      .catch(error => Observable.throw(error.json()));
+  }
+
   getRestsList():Observable<RestList[]>{
     return this.http.get(this.restListURL)
                 .map(response => response.json().obj)
