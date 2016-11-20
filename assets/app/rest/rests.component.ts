@@ -40,6 +40,7 @@ import {RestListService} from "./restList.service";
           <span> Name: {{rest.name}}</span>
           <span> Address: {{rest.address}}</span>
           <span> Rating: {{rest.rating}}</span>
+          <button (click)="deleteMyRest(rest._id, rest)">Delete</button>
           </li>
     </ul>
 </div>
