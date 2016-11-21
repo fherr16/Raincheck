@@ -34,8 +34,6 @@
     "assets/app/home/home.component.ts",
     "assets/app/rest/rest.service.ts",
     "assets/app/rest/rest.ts",
-    "assets/app/rest/restList.service.ts",
-    "assets/app/rest/restList.ts",
     "assets/app/rest/rests.component.ts",
     "public/js/vendor/@angular/common/esm/index.d.ts",
     "public/js/vendor/@angular/common/esm/src/common_directives.d.ts",
