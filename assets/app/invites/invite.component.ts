@@ -27,7 +27,7 @@ import {InviteService} from "./invite.service";
 
     <div *ngIf="selectedFriend">
       <h4> When Do You Want To Go With {{selectedFriend.firstName}}? </h4>
-      <p> Just added this to change </p>
+      <p> Just added this to sdfsdf <p>
     </div>
 
   </div>
