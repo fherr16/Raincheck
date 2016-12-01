@@ -34,7 +34,6 @@
     "assets/app/invites/invite.component.ts",
     "assets/app/invites/invite.service.ts",
     "assets/app/invites/invite.ts",
-    "assets/app/invites/timeAndDate.component.ts",
     "assets/app/rest/rest.service.ts",
     "assets/app/rest/rest.ts",
     "assets/app/rest/rests.component.ts",
