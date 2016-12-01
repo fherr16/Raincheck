@@ -24,7 +24,6 @@ import {InviteService} from "./invite.service";
         </li>
       </ul>
     </div>
-
   </div>
   `,
 })

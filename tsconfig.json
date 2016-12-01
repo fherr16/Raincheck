@@ -24,7 +24,6 @@
     "assets/app/errors/error.component.ts",
     "assets/app/errors/error.service.ts",
     "assets/app/errors/error.ts",
-    "assets/app/friends/friend-list.component.ts",
     "assets/app/friends/friend.component.ts",
     "assets/app/friends/friend.service.ts",
     "assets/app/friends/friend.ts",
