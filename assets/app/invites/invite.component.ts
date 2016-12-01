@@ -19,10 +19,14 @@ import {InviteService} from "./invite.service";
     <div style="border:1px solid">
       <h4> Current Friends </h4>
       <ul *ngFor="let friend of friends">
-        <li>
+        <li (click)="selectFriend(friend)">
             <span> Name: {{friend.firstName}}</span>
         </li>
       </ul>
+    </div>
+
+    <div *ngIf="selectedFriend">
+      <h4> When Do You Want To Go With {{selectedFriend.firstName}}? </h4>
     </div>
 
   </div>
@@ -39,9 +43,14 @@ export class InviteComponent implements OnInit{
   ) { }
 
   friends: Friend[];
+  selectedFriend: Friend;
 
   ngOnInit(){
     this.getFriends();
+  }
+
+  selectFriend(friend: Friend){
+    this.selectedFriend = friend;
   }
 
   getFriends(){
