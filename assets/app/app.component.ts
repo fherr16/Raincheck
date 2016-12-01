@@ -3,6 +3,7 @@ import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 
 import { HomeComponent } from "./home/home.component";
 import { InviteComponent } from "./invites/invite.component";
+import { FriendListComponent } from "./friends/friend-list.component";
 import { FriendsHeaderComponent } from "./friends/friends-header.component";
 import { RestComponent } from "./rest/rests.component";
 import { SigninComponent } from "./auth/signin.component";
