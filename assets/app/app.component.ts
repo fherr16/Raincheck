@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Routes, ROUTER_DIRECTIVES } from "@angular/router";
 
+import { HomeInitComponent } from "./home/home-init.component";
 import { HomeComponent } from "./home/home.component";
 import { InviteComponent } from "./invites/invite.component";
 import { FriendsHeaderComponent } from "./friends/friends-header.component";
@@ -24,7 +25,8 @@ import { ErrorComponent } from "./errors/error.component";
     directives: [ROUTER_DIRECTIVES, HeaderComponent, ErrorComponent]
   })
 @Routes([
-    {path: '/', component: HomeComponent},
+    {path: '/', component: HomeInitComponent},
+    {path: '/home', component: HomeComponent},
     {path: '/friends', component: FriendsHeaderComponent},
     {path: '/signin', component: SigninComponent},
     {path: '/logout', component: LogoutComponent},

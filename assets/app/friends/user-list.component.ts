@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FriendComponent } from "./friend.component";
 import { Friend } from "./friend";
 import { FriendService } from "./friend.service";
+import { HomeService } from "./../home/home.service";
 import { ErrorService } from "../errors/error.service";
 @Component({
     selector: 'my-user-list',
@@ -44,7 +45,7 @@ import { ErrorService } from "../errors/error.service";
 })
 export class UserListComponent implements OnInit {
 
-    constructor(private _friendService: FriendService, private _errorService: ErrorService) {}
+    constructor(private _friendService: FriendService, private _homeService: HomeService, private _errorService: ErrorService) {}
 
     friends: Friend[];
     users: Friend[];
@@ -81,6 +82,15 @@ export class UserListComponent implements OnInit {
         }
 
         if(!hasFriend) {
+            this._homeService.addAction('test added test2', '123')
+                .subscribe(
+                    data => {
+                        console.log(data);
+                        this._homeService.actions.push(data);
+                    },
+                    error => this._errorService.handleError(error)
+                );
+
             this._friendService.addFriend(user)
                 .subscribe(
                     data => {
