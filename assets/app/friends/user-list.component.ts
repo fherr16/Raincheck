@@ -70,35 +70,43 @@ export class UserListComponent implements OnInit {
             );
     }
 
-    onAdd(user: Friend) {
+    onAdd(friend: Friend) {
         var hasFriend = false,
-            id = user.userId;
+            friendId = friend.userId,
+            user;
 
-        for(var i = 0;i < this.friends.length; i++) {
-            if(user.userId == this.friends[i].userId) {
-                hasFriend = true;
-                alert('You are already friends with this user!');
-            }
+        this._friendService.getUser(localStorage.getItem('userId'))
+            .subscribe(
+                data => {
+                    user = data;
+
+                    for(var i = 0;i < this.friends.length; i++) {
+                        if(friendId == this.friends[i].userId) {
+                            hasFriend = true;
+                            alert('You are already friends with this user!');
+                        }
+                    }
+
+                    if(!hasFriend) {
+                        this._homeService.addAction('added', 123, user, friend)
+                            .subscribe(
+                                data => {
+                                    console.log(data);
+                                    this._homeService.actions.push(data);
+                                },
+                                error => this._errorService.handleError(error)
+                            );
+
+                        this._friendService.addFriend(friend)
+                            .subscribe(
+                                data => {
+                                    console.log(data);
+                                    this._friendService.friends.push(data);
+                                },
+                                error => this._errorService.handleError(error)
+                            );
+                    }     
+            );
         }
-
-        if(!hasFriend) {
-            this._homeService.addAction('test added test2', '123')
-                .subscribe(
-                    data => {
-                        console.log(data);
-                        this._homeService.actions.push(data);
-                    },
-                    error => this._errorService.handleError(error)
-                );
-
-            this._friendService.addFriend(user)
-                .subscribe(
-                    data => {
-                        console.log(data);
-                        this._friendService.friends.push(data);
-                    },
-                    error => this._errorService.handleError(error)
-                );
-        }     
     }  
 }

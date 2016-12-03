@@ -52,6 +52,13 @@ export class FriendService {
             .catch(error => Observable.throw(error.json()));
     }
 
+    getUser(userId: String) {
+        const headers = new Headers({'Content-Type': 'application/json'});
+        return this._http.get('http://localhost:3000/friendlist/user/' + userId)
+            .map(response => response.json().obj)
+            .catch(error => Observable.throw(error.json()));
+    }
+
     deleteFriend(friend: Friend) {
         this.friends.splice(this.friends.indexOf(friend), 1);
         return this._http.delete('http://localhost:3000/friendlist/' + friend.friendId)

@@ -10,7 +10,7 @@ import { ErrorService } from "../errors/error.service";
     template: `   
         <div class="row">
             <ul class="col-sm-12"> 
-                <li *ngFor="let action of actions">{{action.message}}</li>
+                <li *ngFor="let action of actions">{{action.userName + ' ' + action.message + ' ' + action.friendName}}</li>
             </ul>
         </div>
     `,

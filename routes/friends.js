@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var passwordHash = require('password-hash');
+var jwt = require('jsonwebtoken');
 
 var Friend = require('../models/friend');
 var User = require('../models/user');
@@ -35,6 +37,21 @@ router.get('/users', function(req, res, next) {
                 obj: docs
             });
         });
+});
+
+router.get('/user/:id', function(req, res, next) {
+   User.findById(req.params.id, function(err, doc) {
+       if (err) {
+           return res.status(404).json({
+               title: 'An error occurred',
+               error: err
+           });
+       }
+       res.status(200).json({
+           message: 'Success',
+           obj: doc
+       });
+   }) 
 });
 
 router.post('/', function(req, res, next) {
