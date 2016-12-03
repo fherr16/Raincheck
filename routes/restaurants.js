@@ -51,6 +51,22 @@ router.get('/:id', function(req, res, next) {
   })
 })
 
+router.get('/selectedRest/:id', function(req, res, next) {
+  Rest.findById(req.params.id)
+  .exec(function(err, docs) {
+    if(err){
+      return res.status(404).json({
+        title: "Not Found",
+        error: err
+      });
+    }
+    res.status(200).json({
+      message: "Success",
+      obj: docs
+    });
+  })
+})
+
 router.get('/', function(req, res, next) {
   Rest.find()
   .exec(function(err, docs) {

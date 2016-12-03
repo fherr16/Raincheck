@@ -13,6 +13,7 @@ import { ErrorComponent } from "./errors/error.component";
 @Component({
     selector: 'my-app',
     template: `
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" media="all">
         <div class="container">
             <my-header></my-header>
             <div class="row">
@@ -29,7 +30,7 @@ import { ErrorComponent } from "./errors/error.component";
     {path: '/signin', component: SigninComponent},
     {path: '/logout', component: LogoutComponent},
     {path: '/rest', component: RestComponent},
-    {path: '/invites', component: InviteComponent},
+    {path: '/invite', component: InviteComponent},
 ])
 export class AppComponent {
 

@@ -33,6 +33,12 @@ export class RestService {
       .catch(error => Observable.throw(error.json()));
   }
 
+  getSingleRest(id:String):Observable<Rest>{
+    return this.http.get(`${this.restURL}/selectedRest/${id}`)
+      .map(response => response.json().obj)
+      .catch(error => Observable.throw(error.json()));
+  }
+
   getRests():Observable<Rest[]>{
     return this.http.get(this.restURL)
       .map(response => response.json().obj)

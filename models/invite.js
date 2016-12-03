@@ -6,6 +6,7 @@ var schema = new Schema({
     friendId: {type: String, required: true},
     restName: {type: String, required: true},
     restAddress: {type: String, required: true},
+    timeAndDate:{type: String, required:true},
 });
 
 module.exports = mongoose.model('Invite', schema);

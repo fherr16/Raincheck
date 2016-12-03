@@ -30,7 +30,6 @@ import {RestService} from "./rest.service";
             <span> Address: {{rest.address}}</span>
             <span> Rating: {{rest.rating}}</span>
             <button (click)="delete(rest._id, rest)">Delete</button>
-            <button (click)='chooseFriend()'>Invite</button>
             </li>
       </ul>
     </div>
@@ -43,6 +42,7 @@ import {RestService} from "./rest.service";
             <span> Address: {{rest.address}}</span>
             <span> Rating: {{rest.rating}}</span>
             <button (click)="delete(rest._id, rest)">Delete</button>
+            <button (click)='chooseFriend(rest._id)'>Invite</button>
             </li>
       </ul>
     </div>
@@ -57,8 +57,9 @@ export class RestComponent implements OnInit{
 
   constructor(private router: Router, private _authService: AuthService, private restService: RestService, private _errorService: ErrorService) { }
 
-  chooseFriend(){
-    this.router.navigate(['/invites']);
+  chooseFriend(restID:string){
+    localStorage.setItem('restID', restID);
+    this.router.navigate(['/invite']);
   }
 
   add(name:string, address:string, rating:number): void{

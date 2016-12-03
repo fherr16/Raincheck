@@ -3,5 +3,6 @@ export class Invite {
 				public userId:string,
 				public friendId: string,
 				public restName: string,
-				public restAddress: string) {}
+				public restAddress: string,
+				public timeAndDate: string) {}
 }
