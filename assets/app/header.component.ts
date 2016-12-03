@@ -13,6 +13,7 @@ import { AuthService } from "./auth/auth.service";
         <header class="row">
             <nav class="col-sm-12">
                 <ul class="nav-links">
+                    <li><a [routerLink]="['/home']" *ngIf="isLoggedIn()">Home</a></li>
                     <li><a [routerLink]="['/friends']" *ngIf="isLoggedIn()">Friend List</a></li>
                     <li><a [routerLink]="['/rest']" *ngIf="isLoggedIn()">Restaurants</a></li>
                     <li><a [routerLink]="['/signin']" *ngIf="!isLoggedIn()">Log In</a></li>

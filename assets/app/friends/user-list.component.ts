@@ -3,37 +3,41 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FriendComponent } from "./friend.component";
 import { Friend } from "./friend";
 import { FriendService } from "./friend.service";
+import { HomeService } from "./../home/home.service";
 import { ErrorService } from "../errors/error.service";
 @Component({
     selector: 'my-user-list',
     template: `
-        <div class="col-md-8 col-md-offset-2">           
-            <table class="table">
+        <div class="col-sm-8 col-sm-offset-2">           
+            <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Action</th>
+                        <th><u>First Name</u></th>
+                        <th><u>Action</u></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let user of users">
                         <td>{{user.firstName}}</td>
-                        <td><button class="btn btn-xs btn-success user-button" (click)="onAdd(user)" *ngIf="friends">ADD</button></td>
+                        <td><button class="btn btn-xs btn-primary user-button" (click)="onAdd(user)" *ngIf="friends">Add</button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     `,
     styles: [`
-        .friendlist {
-            list-style-type: none;
-            text-align: right;
+        .table>thead>tr>th {
+            border: none;
         }
 
-        .list-user {
-            padding: 4px;
+        .table>tbody>tr>td {
+            border: none;
         }
-        
+
+        u {
+            color: blue;
+        }
+
         .user-button {
             margin-left: 3px;
         }
@@ -41,7 +45,7 @@ import { ErrorService } from "../errors/error.service";
 })
 export class UserListComponent implements OnInit {
 
-    constructor(private _friendService: FriendService, private _errorService: ErrorService) {}
+    constructor(private _friendService: FriendService, private _homeService: HomeService, private _errorService: ErrorService) {}
 
     friends: Friend[];
     users: Friend[];
@@ -66,25 +70,43 @@ export class UserListComponent implements OnInit {
             );
     }
 
-    onAdd(user: Friend) {
-        var hasFriend = false;
-        var id = user.userId;
+    onAdd(friend: Friend) {
+        var hasFriend = false,
+            friendId = friend.userId,
+            user;
 
-        for(var i = 0;i < this.friends.length; i++) {
-            if(user.userId == this.friends[i].userId) {
-                hasFriend = true;
-            }
+        this._friendService.getUser(localStorage.getItem('userId'))
+            .subscribe(
+                data => {
+                    user = data;
+
+                    for(var i = 0;i < this.friends.length; i++) {
+                        if(friendId == this.friends[i].userId) {
+                            hasFriend = true;
+                            alert('You are already friends with this user!');
+                        }
+                    }
+
+                    if(!hasFriend) {
+                        this._homeService.addAction('added', 123, user, friend)
+                            .subscribe(
+                                data => {
+                                    console.log(data);
+                                    this._homeService.actions.push(data);
+                                },
+                                error => this._errorService.handleError(error)
+                            );
+
+                        this._friendService.addFriend(friend)
+                            .subscribe(
+                                data => {
+                                    console.log(data);
+                                    this._friendService.friends.push(data);
+                                },
+                                error => this._errorService.handleError(error)
+                            );
+                    }     
+            );
         }
-
-        if(!hasFriend) {
-            this._friendService.addFriend(user)
-                .subscribe(
-                    data => {
-                        console.log(data);
-                        this._friendService.friends.push(data);
-                    },
-                    error => this._errorService.handleError(error)
-                );
-        }     
     }  
 }

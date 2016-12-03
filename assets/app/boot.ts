@@ -5,6 +5,7 @@ import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 import { provide } from "@angular/core";
 import { HTTP_PROVIDERS } from "@angular/http";
 
+import {HomeService} from "./home/home.service";
 import {RestComponent} from "./rest/rests.component";
 import {InviteService} from "./invites/invite.service";
 import {RestService} from "./rest/rest.service";
@@ -16,6 +17,7 @@ import { ErrorService } from "./errors/error.service";
 bootstrap(
   AppComponent,
   [
+    HomeService,
     RestService,
     FriendService,
     AuthService,
